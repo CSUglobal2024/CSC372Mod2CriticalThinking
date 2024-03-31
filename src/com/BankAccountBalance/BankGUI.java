@@ -13,7 +13,8 @@ public class BankGUI extends JFrame {
     private JLabel balanceLabel;
     private JTextField amountField;
 
-    public BankGUI(double initialBalance) {
+    public BankGUI() {
+        double initialBalance = Double.parseDouble(JOptionPane.showInputDialog("Enter initial balance:"));
         this.account = new BankBalance(initialBalance);
         createAndShowGUI();
     }
@@ -71,6 +72,6 @@ public class BankGUI extends JFrame {
 
     public static void main(String[] args) {
         // Example usage
-        SwingUtilities.invokeLater(() -> new BankGUI(1000.0));
+        SwingUtilities.invokeLater(() -> new BankGUI());
     }
 }
