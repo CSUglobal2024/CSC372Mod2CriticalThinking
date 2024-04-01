@@ -5,16 +5,13 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class BankGUI extends JFrame {
-    /**
-	 * 
-	 */
+  
 	private static final long serialVersionUID = 1L;
 	private BankBalance account;
     private JLabel balanceLabel;
     private JTextField amountField;
 
-    public BankGUI() {
-        double initialBalance = Double.parseDouble(JOptionPane.showInputDialog("Enter initial balance:"));
+    public BankGUI(double initialBalance) {
         this.account = new BankBalance(initialBalance);
         createAndShowGUI();
     }
@@ -52,6 +49,7 @@ public class BankGUI extends JFrame {
                 double amount = Double.parseDouble(amountField.getText());
                 account.deposit(amount);
                 balanceLabel.setText("Balance: $" + account.getBalance());
+                amountField.setText(""); 
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(null, "Please enter a valid amount.");
             }
@@ -64,14 +62,23 @@ public class BankGUI extends JFrame {
                 double amount = Double.parseDouble(amountField.getText());
                 account.withdraw(amount);
                 balanceLabel.setText("Balance: $" + account.getBalance());
+                amountField.setText("");
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(null, "Please enter a valid amount.");
             }
         }
     }
 
-    public static void main(String[] args) {
-        // Example usage
-        SwingUtilities.invokeLater(() -> new BankGUI());
+
+    public static void main(String[] args) {       
+        String initialBalanceString = JOptionPane.showInputDialog("Enter initial balance:");
+        
+        try {
+            double initialBalance = Double.parseDouble(initialBalanceString);            
+            SwingUtilities.invokeLater(() -> new BankGUI(initialBalance));
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Invalid initial balance! Please enter a valid number.");
+        }
     }
+
 }
